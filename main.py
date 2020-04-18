@@ -8,9 +8,26 @@ Created on Sun Apr 12 10:37:21 2020
 import numpy as np
 from pylab import plot
 
+
+class Ascenseur:
+    def _init_(self,etageT,etageD):
+        self.t = 0
+        self.d = []
+        
+    
+        
+    
 #création des différentes fonction aléatoire nécessaire
 
 #
+
+personnes = []
+
+class Personne:
+    def __init__(self, etage, depart):
+        self.etage = etage
+        self.depart = depart        
+        
 f=4
 
 def Arrivee():
@@ -22,7 +39,7 @@ def ChoixEtage(f):
     return choixEtage
 
 def tempsTravail():
-    tempsTravail = np.random.exponential(60)
+    tempsTravail = round(np.random.exponential(60))
     return tempsTravail
 
 
@@ -38,9 +55,22 @@ def deroulementJournee(max):
     plot(x, y)
     return personne
 
-
-
-print(deroulementJournee(5))
+def main():
+    c = 0
+    while(c<300):
+        nb = Arrivee()
+        i = 0
+        while(i < nb):
+            etage = ChoixEtage(f)
+            temps = tempsTravail()
+            pers = Personne(etage, temps)
+            personnes.append(pers)
+            i+=1
+            
+            
+        c+=1
+    
+main()
 
         
 
