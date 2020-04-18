@@ -10,9 +10,15 @@ from pylab import plot
 
 
 class Ascenseur:
+<<<<<<< Updated upstream
     def __init__(self):
         self.t = 0
         self.d = []
+=======
+    def _init_(self):
+        self.etageT = 0
+        self.etageD = []
+>>>>>>> Stashed changes
         
     
         
