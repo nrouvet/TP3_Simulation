@@ -10,7 +10,7 @@ from pylab import plot
 
 
 class Ascenseur:
-    def _init_(self,etageT,etageD):
+    def __init__(self):
         self.t = 0
         self.d = []
         
@@ -57,16 +57,23 @@ def deroulementJournee(max):
 
 def main():
     c = 0
+    ascenseur = Ascenseur()
     while(c<300):
         nb = Arrivee()
         i = 0
         while(i < nb):
             etage = ChoixEtage(f)
-            temps = tempsTravail()
+            temps = tempsTravail() + c
             pers = Personne(etage, temps)
             personnes.append(pers)
             i+=1
-            
+         
+        for p in personnes:
+            if(p.depart == c):
+                etage = p.etage
+                if(etage not in ascenseur.d):
+                    ascenseur.d.append(p.etage)
+                personnes.remove(p)
             
         c+=1
     
