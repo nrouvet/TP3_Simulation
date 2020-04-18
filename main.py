@@ -11,6 +11,13 @@ from pylab import plot
 #création des différentes fonction aléatoire nécessaire
 
 #
+
+class personne:
+    def __init__(self, etage, depart):
+        self.etage = etage
+        self.depart = depart
+        
+        
 f=4
 
 def Arrivee():
