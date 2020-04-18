@@ -17,11 +17,7 @@ personnes = []
 class Personne:
     def __init__(self, etage, depart):
         self.etage = etage
-        self.depart = depart
-    
-    def __str__(self):
-        return "Etage: " + self.etage + " Départ : " + self.depart
-        
+        self.depart = depart        
         
 f=4
 
@@ -52,7 +48,7 @@ def deroulementJournee(max):
 
 def main():
     c = 0
-    while(c<5):
+    while(c<300):
         nb = Arrivee()
         i = 0
         while(i < nb):
@@ -66,8 +62,6 @@ def main():
         c+=1
     
 main()
-for b in personnes:
-    print(b.__str__)
 
         
 
