@@ -12,10 +12,15 @@ from pylab import plot
 
 #
 
-class personne:
+personnes = []
+
+class Personne:
     def __init__(self, etage, depart):
         self.etage = etage
         self.depart = depart
+    
+    def toString():
+        return "Etage: " + etage + " Départ : " + depart
         
         
 f=4
@@ -45,9 +50,24 @@ def deroulementJournee(max):
     plot(x, y)
     return personne
 
-
-
-print(deroulementJournee(5))
+def main():
+    c = 0
+    while(c<5):
+        nb = Arrivee()
+        i = 0
+        while(i < nb):
+            etage = ChoixEtage(f)
+            temps = tempsTravail()
+            pers = Personne(etage, temps)
+            personnes.append(pers)
+            i+=1
+            
+            
+        c+=1
+    
+main()
+for b in personnes:
+    print(b)
 
         
 
