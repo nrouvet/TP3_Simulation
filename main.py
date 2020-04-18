@@ -19,8 +19,8 @@ class Personne:
         self.etage = etage
         self.depart = depart
     
-    def toString():
-        return "Etage: " + etage + " Départ : " + depart
+    def __str__(self):
+        return "Etage: " + self.etage + " Départ : " + self.depart
         
         
 f=4
@@ -34,7 +34,7 @@ def ChoixEtage(f):
     return choixEtage
 
 def tempsTravail():
-    tempsTravail = np.random.exponential(60)
+    tempsTravail = round(np.random.exponential(60))
     return tempsTravail
 
 
@@ -67,7 +67,7 @@ def main():
     
 main()
 for b in personnes:
-    print(b)
+    print(b.__str__)
 
         
 
