@@ -14,9 +14,10 @@ class Ascenseur:
         self.t = 0
         self.d = []
         self.disponibilite = True
+        self.temps = 0 
 
     
-        
+    
     
 #création des différentes fonction aléatoire nécessaire
 
