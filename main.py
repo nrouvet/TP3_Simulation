@@ -13,6 +13,7 @@ class Ascenseur:
     def __init__(self):
         self.t = 0
         self.d = []
+        self.disponibilite = True
 
     
         
@@ -20,13 +21,15 @@ class Ascenseur:
 #création des différentes fonction aléatoire nécessaire
 
 #
-
+tempsAttente = []
 personnes = []
 
 class Personne:
-    def __init__(self, etage, depart):
+    def __init__(self, etage, depart, arrivee):
         self.etage = etage
-        self.depart = depart        
+        self.depart = depart
+        self.arrivee = arrivee
+        self.attente = 0        
         
 f=4
 
@@ -57,23 +60,26 @@ def deroulementJournee(max):
 
 def main():
     c = 0
+    minute = 0
     ascenseur = Ascenseur()
-    while(c<300):
-        nb = Arrivee()
-        i = 0
-        while(i < nb):
-            etage = ChoixEtage(f)
-            temps = tempsTravail() + c
-            pers = Personne(etage, temps)
-            personnes.append(pers)
-            i+=1
-         
-        for p in personnes:
-            if(p.depart == c):
-                etage = p.etage
-                if(etage not in ascenseur.d):
-                    ascenseur.d.append(p.etage)
-                personnes.remove(p)
+    while(c<18000):
+        if(c%60==0):
+            nb = Arrivee()
+            i = 0
+            while(i < nb):
+                etage = ChoixEtage(f)
+                temps = tempsTravail() + minute
+                pers = Personne(etage, temps)
+                personnes.append(pers)
+                i+=1
+                   
+            for p in personnes:
+                if(p.depart == minute):
+                    etage = p.etage
+                    if(etage not in ascenseur.d):
+                        ascenseur.d.append(p.etage)
+                    personnes.remove(p)
+            minute+=1 
             
         c+=1
     
