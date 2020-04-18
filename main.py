@@ -59,17 +59,17 @@ def deroulementJournee(max):
     return personne
 
 def main():
-    c = 0
+    sec = 0
     minute = 0
     ascenseur = Ascenseur()
-    while(c<18000):
-        if(c%60==0):
+    while(sec<18000):
+        if(sec%60==0):
             nb = Arrivee()
             i = 0
             while(i < nb):
                 etage = ChoixEtage(f)
                 temps = tempsTravail() + minute
-                pers = Personne(etage, temps)
+                pers = Personne(etage, temps, sec)
                 personnes.append(pers)
                 i+=1
                    
@@ -79,9 +79,12 @@ def main():
                     if(etage not in ascenseur.d):
                         ascenseur.d.append(p.etage)
                     personnes.remove(p)
+                    p.arrivee = sec
             minute+=1 
             
-        c+=1
+        time.time()
+        
+        sec+=1
     
 main()
 
