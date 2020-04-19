@@ -19,9 +19,14 @@ class Ascenseur:
         
     def linearScan(self):
         if(self.direction == "haut"):
-            self.d = self.d.sort()
+            self.etages = self.etages.sort()
         else:
-            self.d = self.d.sort(reverse=True)
+            self.etages = self.etages.sort(reverse=True)
+            
+            
+    def order(self):
+        tmp = []
+        for 
 
     def deplacement(self, t):
         t -= 10
@@ -74,10 +79,10 @@ def deroulementJournee(max):
     return personne
 
 def main():
-    sec = 0
-    minute = 0
+    sec = 0  #Compteur secondes
+    minute = 0  #Compteur minutes
     ascenseur = Ascenseur()
-    while(sec<18000):
+    while(sec<18000):  #18000s = 5h
         if(sec%60==0):
             nb = Arrivee()
             i = 0
