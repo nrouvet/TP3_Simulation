@@ -17,16 +17,32 @@ class Ascenseur:
         self.temps = 0 
         self.direction = "haut"
         
+    def order(self):
+        tmp = []
+        for e in self.etages:
+            if(self.direction == "haut"):
+                if(e < self.current):
+                    tmp.append(e)
+                    self.etages.remove(e)
+            else:
+                if(e > self.current):
+                    tmp.append(e)
+                    self.etages.remove(e) 
+        if(self.direction=="haut"):
+            tmp = tmp.sort()
+        else:
+            tmp = tmp.sort(reverse = True)
+        for t in tmp:
+            self.etages.append(t)
+                   
+        
+        
     def linearScan(self):
         if(self.direction == "haut"):
             self.etages = self.etages.sort()
         else:
             self.etages = self.etages.sort(reverse=True)
-            
-            
-    def order(self):
-        tmp = []
-        for 
+        self.order()   
 
     def deplacement(self, t):
         t -= 10
