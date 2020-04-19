@@ -56,13 +56,10 @@ class Ascenseur:
         self.disponibilite = False
         return False
     
-    def entreeAscenseur(self):
-        
-    
     def sortieAcenseur(temps, self):
         for c in self.capacite:
             if (c.etage == self.current):
-                c.attente = temps - c.arrivee
+                c.attente = temps - c.arrivee * 60
                 tempsAttente.append(c.attente)
                 self.capacite.remove(c)
         
@@ -131,8 +128,9 @@ def main():
                     p.arrivee = sec
             minute+=1 
         
-        
-        
+        ascenseur.deplacement(sec)
+        if(ascenseur.disponibilite == True):
+            ascenseur.sortieAcenseur(sec)
         
         sec+=1
     
