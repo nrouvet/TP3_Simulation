@@ -11,11 +11,25 @@ from pylab import plot
 
 class Ascenseur:
     def __init__(self):
-        self.t = 0
-        self.d = []
+        self.current = 0
+        self.etages = []
         self.disponibilite = True
         self.temps = 0 
+        self.direction = "haut"
+        
+    def linearScan(self):
+        if(self.direction == "haut"):
+            self.d = self.d.sort()
+        else:
+            self.d = self.d.sort(reverse=True)
 
+    def deplacement(self, t):
+        t -= 10
+        if(t == self.temps):
+            if(self.direction=="haut"):
+                self.current += 1
+            else:
+                self.current -=1
     
     
     
@@ -77,13 +91,11 @@ def main():
             for p in personnes:
                 if(p.depart == minute):
                     etage = p.etage
-                    if(etage not in ascenseur.d):
-                        ascenseur.d.append(p.etage)
+                    if(etage not in ascenseur.etages):
+                        ascenseur.etages.append(p.etage)
                     personnes.remove(p)
                     p.arrivee = sec
             minute+=1 
-            
-        time.time()
         
         sec+=1
     
