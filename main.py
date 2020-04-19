@@ -16,6 +16,7 @@ class Ascenseur:
         self.disponibilite = True
         self.temps = 0 
         self.direction = "haut"
+        self.capacite = []
         
     def order(self):
         tmp = []
@@ -29,13 +30,11 @@ class Ascenseur:
                     tmp.append(e)
                     self.etages.remove(e) 
         if(self.direction=="haut"):
-            tmp = tmp.sort()
-        else:
             tmp = tmp.sort(reverse = True)
+        else:
+            tmp = tmp.sort()
         for t in tmp:
-            self.etages.append(t)
-                   
-        
+            self.etages.append(t)                         
         
     def linearScan(self):
         if(self.direction == "haut"):
