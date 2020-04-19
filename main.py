@@ -11,12 +11,12 @@ from pylab import plot
 
 class Ascenseur:
     def __init__(self):
-        self.current = 0
-        self.etages = []
+        self.current = 0      #étage où se trouve l'ascenseur
+        self.etages = []      #étages demandés
         self.disponibilite = True
-        self.temps = 0 
+        self.temps = 0          #calculer le temps de déplacement de l'ascenseur
         self.direction = "haut"
-        self.capacite = []
+        self.capacite = []    #personnes dans l'ascenseur
         
     def order(self):
         tmp = []
@@ -50,8 +50,14 @@ class Ascenseur:
                 self.current += 1
             else:
                 self.current -=1
+            self.temps = t    
+            self.disponibilite = True
             return True
+        self.disponibilite = False
         return False
+    
+    def entreeAscenseur(self):
+        
     
     def sortieAcenseur(temps, self):
         for c in self.capacite:
@@ -69,10 +75,10 @@ personnes = []
 
 class Personne:
     def __init__(self, etage, depart, arrivee):
-        self.etage = etage
-        self.depart = depart
-        self.arrivee = arrivee
-        self.attente = 0        
+        self.etage = etage   #étage demandé
+        self.depart = depart    #temps où la personne part de l'immeuble
+        self.arrivee = arrivee    #temps d'arrivée de la personne
+        self.attente = 0        #utilisé pour calculé le temps d'attente de la personne
         
 f=4
 
@@ -124,6 +130,9 @@ def main():
                     personnes.remove(p)
                     p.arrivee = sec
             minute+=1 
+        
+        
+        
         
         sec+=1
     
