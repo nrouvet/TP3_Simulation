@@ -82,8 +82,8 @@ personnes = []
 class Personne:
     def __init__(self, etage, depart, arrivee):
         self.etage = etage   #étage demandé
-        self.depart = depart    #temps où la personne part de l'immeuble
-        self.arrivee = arrivee    #temps d'arrivée de la personne
+        self.depart = depart    #temps où la personne part de l'immeuble (en minute)
+        self.arrivee = arrivee    #temps d'arrivée de la personne  (en seconde)
         self.attente = 0        #utilisé pour calculé le temps d'attente de la personne
         
 f=4
