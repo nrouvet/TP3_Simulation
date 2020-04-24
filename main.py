@@ -62,13 +62,15 @@ class Ascenseur:
 
     def deplacement(self, t):
         t -= 10
-        if(t == self.temps):
+        if(t == self.temps and len(self.etages)>0):
             if(self.direction=="haut"):
                 self.current += 1
             else:
                 self.current -=1
             self.temps += 10   
             self.disponibilite = True
+            if(self.current in self.etages):
+                self.etages.remove(self.current)
             return True
         self.disponibilite = False
         return False
@@ -126,7 +128,7 @@ def main():
     sec = 0  #Compteur secondes
     minute = 0  #Compteur minutes
     a = Ascenseur()
-    while(sec<18000):  #18000s = 5h
+    while(sec<200):  #18000s = 5h
         if(sec%60==0):
             nb = Arrivee()
             i = 0
@@ -152,6 +154,8 @@ def main():
         a.deplacement(sec)
         a.linearScan()
         a.changeDirection()
+        print(a.etages, a.direction, a.current)
+        
         
         if(a.disponibilite == True):
             a.sortieAcenseur(sec)
@@ -159,6 +163,8 @@ def main():
         sec+=1
     
 main()
+
+
 
         
 
