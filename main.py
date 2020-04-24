@@ -61,8 +61,11 @@ class Ascenseur:
             
 
     def deplacement(self, t):
+        if(len(self.etages)==0):
+            self.temps = t
+            return
         t -= 10
-        if(t == self.temps and len(self.etages)>0):
+        if(t == self.temps):
             if(self.direction=="haut"):
                 self.current += 1
             else:
@@ -71,9 +74,9 @@ class Ascenseur:
             self.disponibilite = True
             if(self.current in self.etages):
                 self.etages.remove(self.current)
-            return True
+            return
         self.disponibilite = False
-        return False
+        return
     
     def sortieAcenseur(self, temps):
         for c in self.capacite:
