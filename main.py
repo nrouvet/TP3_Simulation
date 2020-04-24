@@ -18,6 +18,13 @@ class Ascenseur:
         self.direction = "haut"
         self.capacite = []    #personnes dans l'ascenseur
         
+    def arriveePersonne(self, personne):
+        eta = personne.etage
+        if(0 not in self.etages and self.current != 0):
+            self.etages.append(0)
+        if(eta not in self.etages):
+            self.etages.append(eta)
+        
     def order(self):
         tmp = []
         for e in self.etages:
@@ -116,7 +123,7 @@ def deroulementJournee(max):
 def main():
     sec = 0  #Compteur secondes
     minute = 0  #Compteur minutes
-    ascenseur = Ascenseur()
+    a = Ascenseur()
     while(sec<18000):  #18000s = 5h
         if(sec%60==0):
             nb = Arrivee()
@@ -126,25 +133,26 @@ def main():
                 temps = tempsTravail() + minute
                 pers = Personne(etage, temps, sec)
                 personnes.append(pers)
+                a.arriveePersonne(pers)
                 i+=1
                    
             for p in personnes:
                 if(p.depart == minute):
                     etage = p.etage
-                    if(etage not in ascenseur.etages):
-                        ascenseur.etages.append(p.etage)
-                    if(0 not in ascenseur.etages):
-                        ascenseur.etages.append(0)
+                    if(etage not in a.etages):
+                        a.etages.append(p.etage)
+                    if(0 not in a.etages):
+                        a.etages.append(0)
                     personnes.remove(p)
                     p.arrivee = sec
             minute+=1 
         
-        ascenseur.deplacement(sec)
-        ascenseur.linearScan()
-        ascenseur.changeDirection()
+        a.deplacement(sec)
+        a.linearScan()
+        a.changeDirection()
         
-        if(ascenseur.disponibilite == True):
-            ascenseur.sortieAcenseur(sec)
+        if(a.disponibilite == True):
+            a.sortieAcenseur(sec)
         
         sec+=1
     
