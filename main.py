@@ -24,6 +24,7 @@ class Ascenseur:
             self.etages.append(0)
         if(eta not in self.etages):
             self.etages.append(eta)
+        self.capacite.append(personne)
         
     def order(self):
         tmp = []
