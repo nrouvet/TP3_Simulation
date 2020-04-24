@@ -43,26 +43,9 @@ class Ascenseur:
         else:
             self.etages = self.etages.sort(reverse=True)
         self.order()   
-<<<<<<< Updated upstream
-        
-    
-            
-        
-    
-=======
-<<<<<<< HEAD
 
-=======
         
-    def FCFS(self): #algorithme ascenseur First Come First Serve
-        for e in self.etages:
-            if(e != self.current):
-                self.current = e 
 
-    
-        
->>>>>>> parent of 8720a02... suppression fct
->>>>>>> Stashed changes
     def deplacement(self, t):
         t -= 10
         if(t == self.temps):
