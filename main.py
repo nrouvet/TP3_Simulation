@@ -37,25 +37,26 @@ class Ascenseur:
                     tmp.append(e)
                     self.etages.remove(e) 
         if(self.direction=="haut"):
-            tmp = tmp.sort(reverse = True)
+           tmp.sort(reverse = True)
         else:
-            tmp = tmp.sort()
+            tmp.sort()
         for t in tmp:
             self.etages.append(t)        
  
         
     def linearScan(self):
         if(self.direction == "haut"):
-            self.etages = self.etages.sort()
+            self.etages.sort()
         else:
-            self.etages = self.etages.sort(reverse=True)
+            self.etages.sort(reverse=True)
         self.order()   
 
     def changeDirection(self):
-        if(self.etage[0] < self.current):
-            self.direction = "bas"
-        if(self.etage[0] > self.current):
-            self.direction = "haut"
+        if(len(self.etages) > 0):
+            if(self.etages[0] < self.current):
+                self.direction = "bas"
+            if(self.etages[0] > self.current):
+                self.direction = "haut"
             
 
     def deplacement(self, t):
