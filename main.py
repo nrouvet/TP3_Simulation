@@ -139,8 +139,11 @@ def main():
     sec = 0  #Compteur secondes
     minute = 0  #Compteur minutes
     a = Ascenseur()
+
     tmp = []
-    while(sec<200):  #18000s = 5h
+
+    while(sec<600):  #18000s = 5h
+
         if(sec%60==0):
             nb = Arrivee()
             i = 0
@@ -177,6 +180,8 @@ def main():
         sec+=1
     
 main()
+
+
 
 
 
