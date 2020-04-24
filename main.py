@@ -44,13 +44,10 @@ class Ascenseur:
             self.etages = self.etages.sort(reverse=True)
         self.order()   
         
-    def FCFS(self): #algorithme ascenseur First Come First Serve
-        for e in self.etages:
-            if(e != self.current):
-                self.current = e 
-
     
+            
         
+    
     def deplacement(self, t):
         t -= 10
         if(t == self.temps):
@@ -71,7 +68,6 @@ class Ascenseur:
                 tempsAttente.append(c.attente)
                 self.capacite.remove(c)
         
-    
     
 #création des différentes fonction aléatoire nécessaire
 
