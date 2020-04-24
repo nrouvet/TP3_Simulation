@@ -50,16 +50,16 @@ class Ascenseur:
                 self.current += 1
             else:
                 self.current -=1
-            self.temps = t    
+            self.temps += 10   
             self.disponibilite = True
             return True
         self.disponibilite = False
         return False
     
-    def sortieAcenseur(temps, self):
+    def sortieAcenseur(self, temps):
         for c in self.capacite:
             if (c.etage == self.current):
-                c.attente = temps - c.arrivee * 60
+                c.attente = temps - c.arrivee * 60  #temps d'attente en seconde
                 tempsAttente.append(c.attente)
                 self.capacite.remove(c)
         
