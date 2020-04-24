@@ -67,7 +67,7 @@ class Ascenseur:
     def sortieAcenseur(self, temps):
         for c in self.capacite:
             if (c.etage == self.current):
-                c.attente = temps - c.arrivee * 60  #temps d'attente en seconde
+                c.attente = temps - c.arrivee  #temps d'attente en seconde
                 tempsAttente.append(c.attente)
                 self.capacite.remove(c)
         
@@ -84,7 +84,7 @@ class Personne:
         self.etage = etage   #étage demandé
         self.depart = depart    #temps où la personne part de l'immeuble (en minute)
         self.arrivee = arrivee    #temps d'arrivée de la personne  (en seconde)
-        self.attente = 0        #utilisé pour calculé le temps d'attente de la personne
+        self.attente = 0        #utilisé pour calculé le temps d'attente de la personne (en seconde)
         
 f=4
 
@@ -133,11 +133,16 @@ def main():
                     etage = p.etage
                     if(etage not in ascenseur.etages):
                         ascenseur.etages.append(p.etage)
+                    if(0 not in ascenseur.etages):
+                        ascenseur.etages.append(0)
                     personnes.remove(p)
                     p.arrivee = sec
             minute+=1 
         
         ascenseur.deplacement(sec)
+        ascenseur.linearScan()
+        ascenseur.changeDirection()
+        
         if(ascenseur.disponibilite == True):
             ascenseur.sortieAcenseur(sec)
         
