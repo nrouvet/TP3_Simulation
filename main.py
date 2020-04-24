@@ -44,7 +44,12 @@ class Ascenseur:
             self.etages = self.etages.sort(reverse=True)
         self.order()   
 
-        
+    def changeDirection(self):
+        if(self.etage[0] < self.current):
+            self.direction = "bas"
+        if(self.etage[0] > self.current):
+            self.direction = "haut"
+            
 
     def deplacement(self, t):
         t -= 10
