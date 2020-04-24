@@ -7,7 +7,7 @@ Created on Sun Apr 12 10:37:21 2020
 
 import numpy as np
 from pylab import plot
-
+import matplotlib.pyplot as plt
 
 class Ascenseur:
     def __init__(self):
@@ -60,6 +60,10 @@ class Ascenseur:
                 self.direction = "bas"
             if(self.etages[0] > self.current):
                 self.direction = "haut"
+            if(self.current == 0 ):
+                self.direction = "haut"
+            if(self.current == f):
+                self.direction = "bas"
             
 
     def deplacement(self, t):
@@ -109,6 +113,8 @@ class Personne:
         self.etageAppel = 0
         
 f=4
+individu=[]
+tempsJournee = 18000
 
 def Arrivee():
     arrivee = np.random.poisson(0.5)
@@ -123,30 +129,26 @@ def tempsTravail():
     return tempsTravail
 
 
-def deroulementJournee(max):
-    t = max*60 #convertir les heures en minutes
-    personne =[0]*t
-    i=0
-    while(i<t):
-        personne[i] = Arrivee()
-        i+=1
-    x = range(t)
-    y = personne
+def deroulementJournee(time):
+    
+    x = range(time)
+    y = individu
     plot(x, y)
-    return personne
+    plt.figure()
+    plt.bar(x,y,width = 0.4,color="r")
+    plt.show()
+
 
 def main():
     sec = 0  #Compteur secondes
     minute = 0  #Compteur minutes
     a = Ascenseur()
-
     tmp = []
-
-    while(sec<600):  #18000s = 5h
-
+    while(sec<tempsJournee):  #18000s = 5h
         if(sec%60==0):
             nb = Arrivee()
             i = 0
+            individu.append(nb)
             while(i < nb):
                 etage = ChoixEtage(f)
                 temps = tempsTravail() + minute
@@ -166,9 +168,9 @@ def main():
             minute+=1 
         
         a.deplacement(sec)
-        a.linearScan()
+        #.linearScan()
         a.changeDirection()
-        print(a.etages, a.direction, a.current)
+        #print(a.etages, a.direction, a.current)
         
         
         if(a.disponibilite == True):
@@ -179,7 +181,17 @@ def main():
         
         sec+=1
     
+ 
+
+    
+    
+
 main()
+
+deroulementJournee(int(tempsJournee/60))
+moyenne= np.mean(tempsAttente)
+mediane= np.median(tempsAttente)
+print(moyenne,"sec" , mediane)
 
 
 
