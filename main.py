@@ -87,14 +87,14 @@ class Ascenseur:
     def sortieAcenseur(self, temps):
         for c in self.capacite:
             if (c.etage == self.current):
+                self.capacite.remove(c)
                 c.attente = temps - c.arrivee  #temps d'attente en seconde
                 tempsAttente.append(c.attente)
-                self.capacite.remove(c)
                 if(self.current != 0):
+                    c.etageAppel = c.etage
+                    c.etage = 0
                     personnes.append(c)
-                    i = personnes.index(c)
-                    personnes[i].etageAppel = personnes[i].etage
-                    personnes[i].etage = 0
+                    
         
     
     
@@ -168,9 +168,8 @@ def main():
             minute+=1 
         
         a.deplacement(sec)
-        #.linearScan()
+        a.linearScan()
         a.changeDirection()
-        #print(a.etages, a.direction, a.current)
         
         
         if(a.disponibilite == True):
@@ -178,6 +177,9 @@ def main():
             for t in tmp:
                 if(t.etageAppel == a.current):
                     a.entreePersonne(t)
+                    tmp.remove(t)
+        
+        #print(a.etages, a.direction, a.current, len(a.capacite))
         
         sec+=1
     
@@ -191,7 +193,8 @@ main()
 deroulementJournee(int(tempsJournee/60))
 moyenne= np.mean(tempsAttente)
 mediane= np.median(tempsAttente)
-print(moyenne,"sec" , mediane)
+print("Temps d'attente moyen : ", moyenne,"sec")
+print("Temps d'attente médian : ", mediane, "sec")
 
 
 
