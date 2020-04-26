@@ -10,7 +10,8 @@ from pylab import plot
 import matplotlib.pyplot as plt
 
 class Ascenseur:
-    def __init__(self):
+    def __init__(self, politique):
+        self.politiqueDeplacement = politique
         self.current = 0      #étage où se trouve l'ascenseur
         self.etages = []      #étages demandés
         self.disponibilite = True
@@ -19,10 +20,14 @@ class Ascenseur:
         self.capacite = []    #personnes dans l'ascenseur
         
     def arriveePersonne(self, personne):
+        if(milieu in self.etages and self.politiqueDeplacement == "milieu" and len(self.capacite) == 0 and self.current != 0):
+            self.etages.remove(milieu)
         if(0 not in self.etages and self.current != 0):
             self.etages.append(0)
             
     def entreePersonne(self, personne):
+        if(self.politiqueDeplacement == "milieu" and len(self.capacite) == 0):
+            self.etages.remove(milieu)
         eta = personne.etage
         if(eta not in self.etages):
             self.etages.append(eta)
@@ -64,7 +69,6 @@ class Ascenseur:
                 self.direction = "haut"
             if(self.current == f):
                 self.direction = "bas"
-            
 
     def deplacement(self, t):
         if(len(self.etages)==0):
@@ -77,9 +81,9 @@ class Ascenseur:
             else:
                 self.current -=1
             self.temps += 10   
-            self.disponibilite = True
             if(self.current in self.etages):
-                self.etages.remove(self.current)
+                self.etages.remove(self.current)    
+                self.disponibilite = True
             return
         self.disponibilite = False
         return
@@ -94,6 +98,8 @@ class Ascenseur:
                     c.etageAppel = c.etage
                     c.etage = 0
                     personnes.append(c)
+        if(self.politiqueDeplacement == "milieu" and len(self.capacite) == 0 and self.current != milieu):
+            self.etages.append(milieu)
                     
         
     
@@ -113,8 +119,9 @@ class Personne:
         self.etageAppel = 0
         
 f=4
+milieu = int(f/2)
 individu=[]
-tempsJournee = 18000
+tempsJournee = 180
 
 def Arrivee():
     arrivee = np.random.poisson(0.5)
@@ -139,10 +146,10 @@ def deroulementJournee(time):
     plt.show()
 
 
-def main():
+def main(politiqueMarche = "rester"):
     sec = 0  #Compteur secondes
     minute = 0  #Compteur minutes
-    a = Ascenseur()
+    a = Ascenseur(politiqueMarche)
     tmp = []
     while(sec<tempsJournee):  #18000s = 5h
         if(sec%60==0):
@@ -179,7 +186,7 @@ def main():
                     a.entreePersonne(t)
                     tmp.remove(t)
         
-        #print(a.etages, a.direction, a.current, len(a.capacite))
+        print(a.etages, a.direction, a.current, len(a.capacite))
         
         sec+=1
     
@@ -188,7 +195,7 @@ def main():
     
     
 
-main()
+main("milieu")
 
 deroulementJournee(int(tempsJournee/60))
 moyenne= np.mean(tempsAttente)
