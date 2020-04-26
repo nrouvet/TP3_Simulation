@@ -22,12 +22,10 @@ class Ascenseur:
     def arriveePersonne(self, personne):
         if(milieu in self.etages and self.politiqueDeplacement == "milieu" and len(self.capacite) == 0 and self.current != 0):
             self.etages.remove(milieu)
-        if(0 not in self.etages and self.current != 0):
-            self.etages.append(0)
+        if(personne.etageAppel not in self.etages and self.current != 0):
+            self.etages.append(personne.etageAppel)
             
     def entreePersonne(self, personne):
-        if(self.politiqueDeplacement == "milieu" and len(self.capacite) == 0):
-            self.etages.remove(milieu)
         eta = personne.etage
         if(eta not in self.etages):
             self.etages.append(eta)
@@ -121,7 +119,7 @@ class Personne:
 f=4
 milieu = int(f/2)
 individu=[]
-tempsJournee = 180
+tempsJournee = 18000
 
 def Arrivee():
     arrivee = np.random.poisson(0.5)
@@ -149,7 +147,8 @@ def deroulementJournee(time):
 def main(politiqueMarche = "rester"):
     sec = 0  #Compteur secondes
     minute = 0  #Compteur minutes
-    a = Ascenseur(politiqueMarche)
+    a1 = Ascenseur(politiqueMarche)
+    a2 = Ascenseur(politiqueMarche)
     tmp = []
     while(sec<tempsJournee):  #18000s = 5h
         if(sec%60==0):
@@ -161,32 +160,52 @@ def main(politiqueMarche = "rester"):
                 temps = tempsTravail() + minute
                 pers = Personne(etage, temps, sec)
                 tmp.append(pers)
-                a.arriveePersonne(pers)
                 i+=1
                    
             for p in personnes:
                 if(p.depart == minute):
                     etage = p.etageAppel
-                    if(etage not in a.etages):
-                        a.etages.append(p.etage)
                     tmp.append(p)
                     personnes.remove(p)
                     p.arrivee = sec
+                    
+            for t in tmp:
+                if(a1.current == t.etageAppel and a1.disponibilite == True):
+                    a1.arriveePersonne(t)
+                elif(a2.current == t.etageAppel and a2.disponibilite == True):
+                    a2.arriveePersonne(t)
+                elif(len(a1.etages) < len(a2.etages)):
+                    a1.arriveePersonne(t)
+                else:
+                    a2.arriveePersonne(t)
+                
             minute+=1 
         
-        a.deplacement(sec)
-        a.linearScan()
-        a.changeDirection()
+        
+        a1.deplacement(sec)
+        a2.deplacement(sec)
+        #a1.linearScan()
+        #a2.linearScan()
+        a1.changeDirection()
+        a2.changeDirection()
         
         
-        if(a.disponibilite == True):
-            a.sortieAcenseur(sec)
+        if(a1.disponibilite == True):
+            a1.sortieAcenseur(sec)
             for t in tmp:
-                if(t.etageAppel == a.current):
-                    a.entreePersonne(t)
+                if(t.etageAppel == a1.current):
+                    a1.entreePersonne(t)
+                    tmp.remove(t)
+        if(a2.disponibilite == True):
+            a2.sortieAcenseur(sec)
+            for t in tmp:
+                if(t.etageAppel == a2.current):
+                    a2.entreePersonne(t)
                     tmp.remove(t)
         
-        print(a.etages, a.direction, a.current, len(a.capacite))
+        #print(a1.etages, a1.direction, a1.current, len(a1.capacite))
+        #print(a2.etages, a2.direction, a2.current, len(a2.capacite))
+        #print("\n")
         
         sec+=1
     
