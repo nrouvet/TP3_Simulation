@@ -25,11 +25,13 @@ class Ascenseur:
         if(personne.etageAppel not in self.etages and self.current != 0):
             self.etages.append(personne.etageAppel)
             
-    def entreePersonne(self, personne):
+    def entreePersonne(self, personne, temps):
         eta = personne.etage
         if(eta not in self.etages):
             self.etages.append(eta)
         self.capacite.append(personne)
+        personne.attente = temps - personne.arrivee
+        tempsAttente2.append(personne.attente)
         
     def order(self):
         tmp = []
@@ -105,7 +107,8 @@ class Ascenseur:
 #création des différentes fonction aléatoire nécessaire
 
 #
-tempsAttente = []
+tempsAttente = [] #temps d'attente de l'appel de l'ascenseur à la descente de l'ascenseur
+tempsAttente2 = [] #temps d'attente de l'appel de l'ascenseur à la montée dans l'ascenseur
 personnes = []
 
 class Personne:
@@ -119,7 +122,7 @@ class Personne:
 f=4
 milieu = int(f/2)
 individu=[]
-tempsJournee = 18000
+tempsJournee = 18000  #18000 sec = 5h
 
 def Arrivee():
     arrivee = np.random.poisson(0.5)
@@ -194,13 +197,13 @@ def main(politiqueMarche = "rester"):
             a1.sortieAcenseur(sec)
             for t in tmp:
                 if(t.etageAppel == a1.current):
-                    a1.entreePersonne(t)
+                    a1.entreePersonne(t, sec)
                     tmp.remove(t)
         if(a2.disponibilite == True):
             a2.sortieAcenseur(sec)
             for t in tmp:
                 if(t.etageAppel == a2.current):
-                    a2.entreePersonne(t)
+                    a2.entreePersonne(t, sec)
                     tmp.remove(t)
         
         #print(a1.etages, a1.direction, a1.current, len(a1.capacite))
@@ -219,8 +222,12 @@ main("milieu")
 deroulementJournee(int(tempsJournee/60))
 moyenne= np.mean(tempsAttente)
 mediane= np.median(tempsAttente)
+moyenne2= np.mean(tempsAttente2)
+mediane2= np.median(tempsAttente2)
 print("Temps d'attente moyen : ", moyenne,"sec")
 print("Temps d'attente médian : ", mediane, "sec")
+print("Temps d'attente2 moyen : ", moyenne2,"sec")
+print("Temps d'attente2 médian : ", mediane2, "sec")
 
 
 
