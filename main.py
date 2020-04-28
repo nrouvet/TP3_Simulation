@@ -119,7 +119,7 @@ class Personne:
         self.attente = 0        #utilisé pour calculé le temps d'attente de la personne (en seconde)
         self.etageAppel = 0
         
-f=4
+f=7
 milieu = int(f/2)
 individu=[]
 tempsJournee = 18000  #18000 sec = 5h
@@ -147,11 +147,14 @@ def deroulementJournee(time):
     plt.show()
 
 
-def main(politiqueMarche = "rester"):
+def main(nbAscenseur, politiqueMarche = "rester"):
     sec = 0  #Compteur secondes
     minute = 0  #Compteur minutes
     a1 = Ascenseur(politiqueMarche)
-    a2 = Ascenseur(politiqueMarche)
+    if(nbAscenseur > 1):
+        a2 = Ascenseur(politiqueMarche)
+    if(nbAscenseur > 2):
+        a3 = Ascenseur(politiqueMarche)
     tmp = []
     while(sec<tempsJournee):  #18000s = 5h
         if(sec%60==0):
@@ -173,24 +176,51 @@ def main(politiqueMarche = "rester"):
                     p.arrivee = sec
                     
             for t in tmp:
-                if(a1.current == t.etageAppel and a1.disponibilite == True):
-                    a1.arriveePersonne(t)
-                elif(a2.current == t.etageAppel and a2.disponibilite == True):
-                    a2.arriveePersonne(t)
-                elif(len(a1.etages) < len(a2.etages)):
-                    a1.arriveePersonne(t)
-                else:
-                    a2.arriveePersonne(t)
+                if(nbAscenseur == 2):
+                    if(a1.current == t.etageAppel and a1.disponibilite == True):
+                        a1.arriveePersonne(t)
+                    elif(a2.current == t.etageAppel and a2.disponibilite == True):
+                        a2.arriveePersonne(t)
+                    elif(len(a1.etages) < len(a2.etages)):
+                        a1.arriveePersonne(t)
+                    elif(len(a1.etages) >= len(a2.etages)):
+                        a2.arriveePersonne(t)
+                if(nbAscenseur == 3):
+                    e1 = len(a1.etages)
+                    e2 = len(a2.etages)
+                    e3 = len(a3.etages)
+                    if(a1.current == t.etageAppel and a1.disponibilite == True):
+                        a1.arriveePersonne(t)
+                    elif(a2.current == t.etageAppel and a2.disponibilite == True):
+                        a2.arriveePersonne(t)
+                    elif(a3.current == t.etageAppel and a3.disponibilite == True):
+                        a3.arriveePersonne(t)
+                    elif(e1 > e2 and e1 > e3):
+                        a1.arriveePersonne(t)
+                    elif(e2 > e1 and e2 > e3):
+                        a2.arriveePersonne(t)
+                    elif(e3 >= e1 and e3 >= e2):
+                        a3.arriveePersonne(t)
+                    
                 
             minute+=1 
         
         
         a1.deplacement(sec)
-        a2.deplacement(sec)
+        if(nbAscenseur > 1):
+            a2.deplacement(sec)
+        if(nbAscenseur > 2):
+            a3.deplacement(sec)
         #a1.linearScan()
-        #a2.linearScan()
+        #if(nbAscenseur > 1):
+            #a2.linearScan()
+        #if(nbAscenseur > 2):
+            #a3.linearScan()
         a1.changeDirection()
-        a2.changeDirection()
+        if(nbAscenseur > 1):
+            a2.changeDirection()
+        if(nbAscenseur > 2):
+            a3.changeDirection()
         
         
         if(a1.disponibilite == True):
@@ -199,12 +229,20 @@ def main(politiqueMarche = "rester"):
                 if(t.etageAppel == a1.current):
                     a1.entreePersonne(t, sec)
                     tmp.remove(t)
-        if(a2.disponibilite == True):
-            a2.sortieAcenseur(sec)
-            for t in tmp:
-                if(t.etageAppel == a2.current):
-                    a2.entreePersonne(t, sec)
-                    tmp.remove(t)
+        if(nbAscenseur > 1):
+            if(a2.disponibilite == True):
+                a2.sortieAcenseur(sec)
+                for t in tmp:
+                    if(t.etageAppel == a2.current):
+                        a2.entreePersonne(t, sec)
+                        tmp.remove(t)
+        if(nbAscenseur > 2):
+            if(a3.disponibilite == True):
+                a3.sortieAcenseur(sec)
+                for t in tmp:
+                    if(t.etageAppel == a3.current):
+                        a3.entreePersonne(t, sec)
+                        tmp.remove(t)
         
         #print(a1.etages, a1.direction, a1.current, len(a1.capacite))
         #print(a2.etages, a2.direction, a2.current, len(a2.capacite))
@@ -217,17 +255,20 @@ def main(politiqueMarche = "rester"):
     
     
 
-main("milieu")
+main(3, "milieu")
 
 deroulementJournee(int(tempsJournee/60))
 moyenne= np.mean(tempsAttente)
 mediane= np.median(tempsAttente)
 moyenne2= np.mean(tempsAttente2)
 mediane2= np.median(tempsAttente2)
-print("Temps d'attente moyen : ", moyenne,"sec")
-print("Temps d'attente médian : ", mediane, "sec")
-print("Temps d'attente2 moyen : ", moyenne2,"sec")
-print("Temps d'attente2 médian : ", mediane2, "sec")
+print("Temps d'attente en descendant de l'ascenseur:")
+print("   - moyen : ", moyenne,"sec")
+print("   - médian : ", mediane, "sec")
+print()
+print("Temps d'attente avant d'entrer dans l'ascenseur:")
+print("   - moyen : ", moyenne2,"sec")
+print("   - médian : ", mediane2, "sec")
 
 
 
