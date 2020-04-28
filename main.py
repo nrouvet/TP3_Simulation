@@ -122,7 +122,7 @@ class Personne:
 f=7
 milieu = int(f/2)
 individu=[]
-tempsJournee = 18000  #18000 sec = 5h
+tempsJournee = 18000 #18000 sec = 5h
 
 def Arrivee():
     arrivee = np.random.poisson(0.5)
@@ -147,7 +147,7 @@ def deroulementJournee(time):
     plt.show()
 
 
-def main(nbAscenseur, politiqueMarche = "rester"):
+def main(nbAscenseur, deplacement = "First", politiqueMarche = "rester"):
     sec = 0  #Compteur secondes
     minute = 0  #Compteur minutes
     a1 = Ascenseur(politiqueMarche)
@@ -211,11 +211,12 @@ def main(nbAscenseur, politiqueMarche = "rester"):
             a2.deplacement(sec)
         if(nbAscenseur > 2):
             a3.deplacement(sec)
-        #a1.linearScan()
-        #if(nbAscenseur > 1):
-            #a2.linearScan()
-        #if(nbAscenseur > 2):
-            #a3.linearScan()
+        if(deplacement == "linear":)
+            a1.linearScan()
+            if(nbAscenseur > 1):
+                a2.linearScan()
+            if(nbAscenseur > 2):
+                a3.linearScan()
         a1.changeDirection()
         if(nbAscenseur > 1):
             a2.changeDirection()
