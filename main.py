@@ -176,7 +176,9 @@ def main(nbAscenseur, deplacement = "First", politiqueMarche = "rester"):
                     p.arrivee = sec
                     
             for t in tmp:
-                if(nbAscenseur == 2):
+                if(nbAscenseur == 1):
+                    a1.arriveePersonne(t)
+                elif(nbAscenseur == 2):
                     if(a1.current == t.etageAppel and a1.disponibilite == True):
                         a1.arriveePersonne(t)
                     elif(a2.current == t.etageAppel and a2.disponibilite == True):
@@ -185,7 +187,7 @@ def main(nbAscenseur, deplacement = "First", politiqueMarche = "rester"):
                         a1.arriveePersonne(t)
                     elif(len(a1.etages) >= len(a2.etages)):
                         a2.arriveePersonne(t)
-                if(nbAscenseur == 3):
+                elif(nbAscenseur == 3):
                     e1 = len(a1.etages)
                     e2 = len(a2.etages)
                     e3 = len(a3.etages)
@@ -195,11 +197,11 @@ def main(nbAscenseur, deplacement = "First", politiqueMarche = "rester"):
                         a2.arriveePersonne(t)
                     elif(a3.current == t.etageAppel and a3.disponibilite == True):
                         a3.arriveePersonne(t)
-                    elif(e1 > e2 and e1 > e3):
+                    elif(e1 < e2 and e1 < e3):
                         a1.arriveePersonne(t)
-                    elif(e2 > e1 and e2 > e3):
+                    elif(e2 < e1 and e2 < e3):
                         a2.arriveePersonne(t)
-                    elif(e3 >= e1 and e3 >= e2):
+                    elif(e3 <= e1 and e3 <= e2):
                         a3.arriveePersonne(t)
                     
                 
@@ -211,7 +213,7 @@ def main(nbAscenseur, deplacement = "First", politiqueMarche = "rester"):
             a2.deplacement(sec)
         if(nbAscenseur > 2):
             a3.deplacement(sec)
-        if(deplacement == "linear":)
+        if(deplacement == "linear"):
             a1.linearScan()
             if(nbAscenseur > 1):
                 a2.linearScan()
@@ -256,7 +258,7 @@ def main(nbAscenseur, deplacement = "First", politiqueMarche = "rester"):
     
     
 
-main(3, "milieu")
+main(2, "First", "milieu")
 
 deroulementJournee(int(tempsJournee/60))
 moyenne= np.mean(tempsAttente)
